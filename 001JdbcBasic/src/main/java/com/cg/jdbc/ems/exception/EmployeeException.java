@@ -4,7 +4,7 @@
 package com.cg.jdbc.ems.exception;
 
 /**
- * @author rvikash
+ * @author smitkuma
  *
  */
 public class EmployeeException extends Exception {
@@ -12,8 +12,13 @@ public class EmployeeException extends Exception {
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = -3571719954478869568L;
+
+	/**
+	 * 
+	 */
 	public EmployeeException() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 
 	/**
@@ -21,7 +26,7 @@ public class EmployeeException extends Exception {
 	 */
 	public EmployeeException(String message) {
 		super(message);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	/**
@@ -29,7 +34,7 @@ public class EmployeeException extends Exception {
 	 */
 	public EmployeeException(Throwable cause) {
 		super(cause);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	/**
@@ -38,7 +43,7 @@ public class EmployeeException extends Exception {
 	 */
 	public EmployeeException(String message, Throwable cause) {
 		super(message, cause);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	/**
@@ -49,7 +54,7 @@ public class EmployeeException extends Exception {
 	 */
 	public EmployeeException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
-		// TODO Auto-generated constructor stub
+
 	}
 
 }

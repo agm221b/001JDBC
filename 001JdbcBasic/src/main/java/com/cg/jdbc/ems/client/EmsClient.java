@@ -5,11 +5,15 @@ package com.cg.jdbc.ems.client;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Properties;
 
-import com.cg.jdbc.ems.dao.EmployeeDao;
-import com.cg.jdbc.ems.dao.IEmployeeDao;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 import com.cg.jdbc.ems.exception.EmployeeException;
 import com.cg.jdbc.ems.model.Employee;
+import com.cg.jdbc.ems.service.EmployeeService;
+import com.cg.jdbc.ems.service.EmployeeServiceImpl;
 
 /**
  * @author rvikash
@@ -17,44 +21,64 @@ import com.cg.jdbc.ems.model.Employee;
  */
 public class EmsClient {
 	// obj of Dao
-	private static IEmployeeDao employeeDao;
+	private static EmployeeService employeeService;
+	private static Logger myLogger;
 	static {
-		employeeDao= new EmployeeDao();
+		employeeService = new EmployeeServiceImpl();
+		   	  Properties props = System.getProperties();
+		   	  String userDir= props.getProperty("user.dir")+"/src/main/resources/";
+		   	  myLogger.info("Current working directory is " +userDir);
+		   	  PropertyConfigurator.configure(userDir+"log4j.properties");
+		 		myLogger=Logger.getLogger("EmsClient.class");
 	}
+	private EmsClient() {
+		
+	}
+
 	/**
 	 * @param args
-	 * @throws EmployeeException 
+	 * @throws EmployeeException
 	 */
 	public static void main(String[] args) throws EmployeeException {
-		Employee employee = new Employee();
-		employee.setEmpName("Tara");employee.setEmpSal(BigDecimal.valueOf(7000.0));
-//adding the emp obj by calling dao layer method
-		employee = employeeDao.addEmployee(employee);
-		if(employee!= null) System.out.println("Employee Added successfully :"+employee);
-		else System.out.println("Employee NOT Added :"+employee);
 		
-//listing all emp obj by calling dao layer method
-		List<Employee> empList = employeeDao.listAllEmployees();
-		if(empList!= null)
-			empList.forEach(System.out::println);
+		Employee employee1 = new Employee();
+		employee1.setEmpName("Tara");
+		employee1.setEmpSal(BigDecimal.valueOf(7000.0));
+		// adding the emp obj by calling dao layer method
+		Employee employee = employeeService.addEmployee(employee1);
+		if (employee != null)
+			myLogger.info("Employee Added successfully :" + employee);
+		else
+			myLogger.error("Employee NOT Added :" + employee);
+
+		// listing all emp obj by calling dao layer method
+		List<Employee> empList = employeeService.listAllEmployees();
+		if (empList != null)
+			myLogger.info(empList);
 		else {
-			System.out.println("No Record Found!!");
+			myLogger.error("No Record Found!!");
 		}
-//updating the emp obj by calling dao layer method
-		employee.setEmpSal(BigDecimal.valueOf(7777));
-		employee.setEmpName("Vikarm");
-		int noOfRecUp = employeeDao.updateEmployee(employee);
-		if(noOfRecUp> 0) System.out.println("Employee Updated successfully :"+employee);
-		else System.out.println("Employee NOT Updated");
-		
-//finding the emp obj by calling dao layer method
-			employee = employeeDao.findByEmpId(employee.getEmpId());
-			if(employee!= null) System.out.println("Employee Found successfully :"+employee);
-			else System.out.println("Employee NOT Found :"+employee);
-	
-//deleting the emp obj by calling dao layer method
-		int noOfRecDel = employeeDao.deleteEmployee(employee.getEmpId());
-		if(noOfRecDel> 0) System.out.println("Employee Deleted successfully :"+employee);
-		else System.out.println("Employee NOT Deleted");
+		// updating the emp obj by calling dao layer method
+		employee1.setEmpSal(BigDecimal.valueOf(7777));
+		employee1.setEmpName("Vikarm");
+		int noOfRecUp = employeeService.updateEmployee(employee1);
+		if (noOfRecUp > 0)
+			myLogger.info("Employee Updated successfully :" + employee1);
+		else
+			myLogger.error("Employee NOT Updated");
+
+		// finding the emp obj by calling dao layer method
+		Employee employee2 = employeeService.findByEmpId(employee1.getEmpId());
+		if (employee2 != null)
+			myLogger.info("Employee Found successfully :" + employee2);
+		else
+			myLogger.error("Employee NOT Found :" + employee2);
+
+		// deleting the emp obj by calling dao layer method
+		int noOfRecDel = employeeService.deleteEmployee(employee1.getEmpId());
+		if (noOfRecDel > 0)
+			myLogger.info("Employee Deleted successfully :" + employee1);
+		else
+			myLogger.error("Employee NOT Deleted");
 	}
 }

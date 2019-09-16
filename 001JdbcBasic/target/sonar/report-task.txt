@@ -1,0 +1,5 @@
+projectKey=com.cg.jdbc:001JdbcBasic
+serverUrl=http://localhost:9000
+dashboardUrl=http://localhost:9000/dashboard/index/com.cg.jdbc:001JdbcBasic
+ceTaskId=AW04xQ18k7baLJmtbNjv
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AW04xQ18k7baLJmtbNjv

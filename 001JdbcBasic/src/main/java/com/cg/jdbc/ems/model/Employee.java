@@ -19,9 +19,7 @@ public class Employee {
 //3> getters N setters
 //4> toString
 //5> equals and hashCode
-	public Employee() {
-		// TODO Auto-generated constructor stub
-	}
+
 	public BigInteger getEmpId() {
 		return empId;
 	}
@@ -50,7 +48,9 @@ public class Employee {
 	}
 	@Override
 	public boolean equals(Object obj) {
-		return this.hashCode()== obj.hashCode();
+		if(obj!=null)
+			return this.hashCode()== obj.hashCode();
+		else return false;
 	}
 
 }
